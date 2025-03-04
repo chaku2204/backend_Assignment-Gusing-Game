@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
-		<skipTests>true</skipTests>
+
 	</properties>
 	<dependencies>
 		<!-- Spring Boot Web Starter -->
@@ -103,7 +103,11 @@
 			<artifactId>spring-security-core</artifactId>
 			 <!-- Use the latest version if available -->
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
