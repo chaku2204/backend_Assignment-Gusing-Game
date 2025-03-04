@@ -50,7 +50,7 @@ The backend server will start at **`http://localhost:8080`**.
 |--------|---------|-------------|
 | GET | `/api/quiz/random-clues` | Get a list of random clues for a city |
 | POST | `/api/quiz/random-clues/checkanswer` | Validate the user's answer |
-| POST | `/api/quiz/start-game` | Start the game and fetch clues & city options |
+| GET | `/api/quiz/start-game` | Start the game and fetch clues & city options |
 
 ## **Request & Response Examples**
 
@@ -77,17 +77,19 @@ POST /api/quiz/start-game
 ```json
 POST /api/quiz/random-clues/checkanswer
 {
-  "cluelist": [],
-  "answer": true,
-  "funFacts": []
+  "clueId":.... ,
+  "cityId": ,
+  
 }
 ```
 **Response:**
 ```json
 {
-  "correct": true,
-  "message": "Correct! Paris is the right answer!",
-  "nextClue": "This city is known for its delicious croissants."
+  "answerct": true,
+   "cluelist": [
+    { "id": 1, "clue": "This city is home to a famous tower that sparkles every night." }
+  ]
+  "funFacts": "This city is known for its delicious croissants."
 }
 ```
 
