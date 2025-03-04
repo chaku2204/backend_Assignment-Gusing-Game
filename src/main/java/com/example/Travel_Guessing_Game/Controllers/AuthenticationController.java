@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
     @Autowired
     private  AuthService authService;
