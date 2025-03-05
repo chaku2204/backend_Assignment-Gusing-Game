@@ -5,8 +5,10 @@ import com.example.Travel_Guessing_Game.Component.JwtUtil;
 import com.example.Travel_Guessing_Game.Model.User;
 import com.example.Travel_Guessing_Game.Repositery.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,16 +45,16 @@ public class AuthService {
         return null;
     }
 
-    public  Map<String, String> registerUser(String email, String password, String username) {
+    public  Map<String, String> registerUser(String email, String password, String username) throws Exception {
         Map<String, String> response = new HashMap<>();
         if (userRepository.existsByEmail(email)) {
-            response.put("message","Email already registered");
-            return response;
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
         }
 
         if (userRepository.findByUsername(username).isPresent()) {
-            response.put("message","Username already taken, please choose another one.");
-            return response;
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already taken, please choose another one.");
+//            response.put("message","Username already taken, please choose another one.");
+//            return response;
         }
 
         if (username == null || username.trim().isEmpty()) {
@@ -72,8 +74,9 @@ public class AuthService {
             response.put("username", user.getUsername());
             return response;
         } catch (Exception e) {
-            response.put("message", "Error occurred during registration.");
-            return response;
+            throw new Exception("Error occurred during registration.");
+//            response.put("message", "Error occurred during registration.");
+//            return response;
         }
     }
 

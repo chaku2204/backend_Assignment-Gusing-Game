@@ -7,6 +7,7 @@ import com.example.Travel_Guessing_Game.Services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,8 +22,19 @@ public class AuthenticationController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestBody SignupRequest request) {
-        Map<String, String> response = authService.registerUser(request.getEmail(), request.getPassword(), request.getUsername());
+    public ResponseEntity<?> register(@RequestBody SignupRequest request){
+        Map<String, String> response = null;
+
+        try {
+            response = authService.registerUser(request.getEmail(), request.getPassword(), request.getUsername());
+        }catch (ResponseStatusException e){
+
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+
         return ResponseEntity.ok(response);
     }
     @PostMapping("/login")
